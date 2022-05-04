@@ -12,10 +12,10 @@ import javax.persistence.*;
 @Table(name="comment")
 public class Comment extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="user_id", nullable = false)
     private User userComment;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="hotel_id")
+    @JoinColumn(name="hotel_id", nullable = false)
     private Hotel hotelIsCommented;
 }

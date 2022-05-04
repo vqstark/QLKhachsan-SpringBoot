@@ -16,8 +16,8 @@ public class BookingRoom extends BaseEntity {
     private User userBook;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="hotel_id")
-    private Hotel hotelIsBooked;
+    @JoinColumn(name="room_id")
+    private Room roomIsBooked;
 
     @Column(nullable = false)
     private Date timeBegin;
@@ -27,4 +27,7 @@ public class BookingRoom extends BaseEntity {
 
     @Column(nullable = false)
     private Double price;
+
+    @Column(nullable = false)
+    private boolean isPaid;
 }
