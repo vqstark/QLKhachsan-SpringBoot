@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+<h1>Register</h1>
+
+<form method="POST" th:action="@{/register}" th:object="${user}">
+<!--  <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>-->
+  <label>Username: </label>
+  <input type="text" name="username" th:field="*{username}"/><br/>
+  <label>Password: </label>
+  <input type="password" name="password" th:field="*{password}"/><br/>
+  <label>Confirm password: </label>
+  <input type="password" name="confirm"/><br/>
+  <label >Full name: </label>
+  <input type="text" name="fullName" th:field="*{fullName}"/><br/>
+  <label>Age: </label>
+  <input type="text" name="age" th:field="*{age}"/><br/>
+  <label>ID Card Number: </label>
+  <input type="text" name="identityCardNumber" th:field="*{identityCardNumber}"/><br/>
+  <label>Phone Number: </label>
+  <input type="text" name="phoneNumber" th:field="*{phoneNumber}"/><br/>
+  <input type="submit" value="Register"/>
+</form>
+</body>
+</html>

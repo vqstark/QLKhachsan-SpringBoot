@@ -13,7 +13,7 @@ import java.util.Set;
 @Table(name="role")
 public class Role extends BaseEntity {
     private String roleName;
-
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> usersHasRole;
+//
+//    @ManyToMany(mappedBy = "roles")
+//    private Set<User> usersHasRole;
 }
