@@ -12,14 +12,9 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/loginPage")
+    @GetMapping("/login")
     public String loadPageLogin() {
         return "login";
-    }
-
-    @GetMapping("/signup")
-    public String loadPageSignup() {
-        return "signup";
     }
 
     @GetMapping("/reservation")
@@ -31,4 +26,5 @@ public class HomeController {
     public String loadPageRooms() {
         return "rooms";
     }
+
 }

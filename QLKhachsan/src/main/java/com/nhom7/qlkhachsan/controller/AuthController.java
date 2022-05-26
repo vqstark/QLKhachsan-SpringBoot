@@ -26,9 +26,8 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "/register")
+    @PostMapping(value = "/signup")
     public String registerUser(User user){
-        System.out.println("User:" + user);
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         Role role = roleRepository.findByRoleName("ROLE_USER");
         HashSet roles = new HashSet();
@@ -38,9 +37,14 @@ public class AuthController {
         return "login";
     }
 
-    @GetMapping("/register")
+    @GetMapping("/signup")
     String register(Model model){
         model.addAttribute("user", new User());
-        return "register";
+        return "signup";
+    }
+
+    @PostMapping("/login")
+    public String login(){
+        return "redirect:/";
     }
 }
