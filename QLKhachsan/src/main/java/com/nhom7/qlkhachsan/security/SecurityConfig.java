@@ -16,14 +16,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/","/login","/logout","/register", "/js/**", "/css/**", "/image/**", "/fonts/**")
+                .antMatchers("/","/login","/logout","/signup", "/js/**", "/css/**", "/media/**", "/scss/**", "/vendor/**")
                 .permitAll();
 
         http.authorizeRequests()
-                .antMatchers("/", "/user/**").access("hasAnyRole('ROLE_MANAGER','ROLE_USER')");
+                .antMatchers("/rooms/**", "/reservation/**").access("hasAnyRole('ROLE_MANAGER','ROLE_USER')");
 
         http.authorizeRequests()
-                .antMatchers("/manager").access("hasRole('ROLE_MANAGER')");
+                .antMatchers("/admin/**").access("hasRole('ROLE_MANAGER')");
 
         //http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 

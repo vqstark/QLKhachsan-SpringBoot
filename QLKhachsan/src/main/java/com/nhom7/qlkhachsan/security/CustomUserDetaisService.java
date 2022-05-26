@@ -23,11 +23,11 @@ public class CustomUserDetaisService implements UserDetailsService {
         if(user!=null){
             UserDetails userDetails;
 
-            HashSet grantedAuthorities = new HashSet();
-            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-//            if(user.getRoles().size()>1) {
-//                grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
-//            }
+            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+            Set<Role> roles = new HashSet<>(user.getRoles());
+            for(Role role: roles){
+                grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+            }
             userDetails = new org.springframework.security.core.userdetails.User(username, user.getPassword(), grantedAuthorities);
             return userDetails;
         }else{
