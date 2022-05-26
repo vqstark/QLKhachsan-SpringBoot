@@ -38,7 +38,7 @@
     <header id="home-header">
       <div id="home-header--bg-image">
         <nav class="navbar navbar-expand-md px-md-5">
-          <a class="navbar-brand" th:href="@{./index.html}">Trang chủ</a>
+          <a class="navbar-brand" th:href="@{/}">Trang chủ</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -85,9 +85,9 @@
 <!--                  >-->
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" th:href="@{/admin}">Admin</a>
-                  <a class="dropdown-item" th:href="@{/loginPage}">Log in</a>
+                  <a class="dropdown-item" th:href="@{/login}">Log in</a>
                   <a class="dropdown-item" th:href="@{/signup}">Sign up</a>
-                  <a class="dropdown-item" th:href="@{signup.html}">Account</a>
+                  <a class="dropdown-item" th:href="@{/}">Account</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" th:href="@{#}">Something else here</a>
                 </div>
@@ -95,6 +95,9 @@
             </ul>
           </div>
         </nav>
+        <form method="POST" th:action="@{/logout}">
+          <input type="submit" value="Logout"/>
+        </form>
         <div class="home-header--title">
           <div class="container p-5">
             <h1>Find the best deals</h1>
