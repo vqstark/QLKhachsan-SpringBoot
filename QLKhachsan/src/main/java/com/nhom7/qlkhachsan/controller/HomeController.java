@@ -17,10 +17,10 @@ public class HomeController {
         return "login";
     }
 
-    @GetMapping("/reservation")
-    public String loadPageReservation() {
-        return "reservation";
-    }
+//    @GetMapping("/reservation")
+//    public String loadPageReservation() {
+//        return "reservation";
+//    }
 
     @GetMapping("/rooms")
     public String loadPageRooms() {

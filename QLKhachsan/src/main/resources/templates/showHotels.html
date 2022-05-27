@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>We'll help you choose best hotel</h1>
+    <div th:each="hotel: ${hotels}">
+        <a th:href="@{'/reservation/hotel=' + ${hotel.name}}">
+            <span th:text="${hotel.name}"></span>
+        </a>
+    </div>
+</body>
+</html>

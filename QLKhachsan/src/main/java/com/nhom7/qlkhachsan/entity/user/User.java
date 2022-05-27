@@ -2,12 +2,14 @@ package com.nhom7.qlkhachsan.entity.user;
 
 import com.nhom7.qlkhachsan.entity.BaseEntity;
 import com.nhom7.qlkhachsan.entity.hotel.BookingRoom;
+import com.nhom7.qlkhachsan.entity.hotel.Hotel;
 import com.nhom7.qlkhachsan.entity.rating.Comment;
 import com.nhom7.qlkhachsan.entity.rating.Follow;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -43,4 +45,7 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "userBook")
     private Set<BookingRoom> bookingRoomSet;
+
+    @OneToMany(mappedBy = "owner")
+    private Set<Hotel> hotels;
 }

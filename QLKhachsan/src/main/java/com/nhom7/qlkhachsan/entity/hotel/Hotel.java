@@ -4,6 +4,7 @@ import com.nhom7.qlkhachsan.entity.BaseEntity;
 import com.nhom7.qlkhachsan.entity.rating.Comment;
 import com.nhom7.qlkhachsan.entity.rating.Follow;
 import com.nhom7.qlkhachsan.entity.user.Role;
+import com.nhom7.qlkhachsan.entity.user.User;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -40,4 +41,7 @@ public class Hotel extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "hotelHasRooms")
     private List<Room> rooms;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User owner;
 }
