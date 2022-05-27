@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class HotelServiceImpl implements HotelService {
@@ -40,5 +41,10 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public List<Room> getAllByHotelID(Long id) {
         return roomRepository.getAllRoomsByHotelID(id);
+    }
+
+    @Override
+    public Hotel addHotel(Hotel hotel){
+        return hotelRepository.save(hotel);
     }
 }

@@ -13,4 +13,6 @@ public interface HotelService {
     Hotel getHotelByName(String nameHotel);
 
     List<Room> getAllByHotelID(Long id);
+
+    Hotel addHotel(Hotel hotel);
 }
