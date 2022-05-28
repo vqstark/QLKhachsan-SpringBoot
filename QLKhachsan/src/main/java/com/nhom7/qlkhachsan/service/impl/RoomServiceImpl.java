@@ -14,4 +14,25 @@ public class RoomServiceImpl implements RoomService {
     public Room addRoom(Room room) {
         return roomRepository.save(room);
     }
+    
+     @Override
+    public List<Room> getAllRooms(Long id) {
+        return roomRepository.getAllRoomsByHotelID(id);
+    }
+
+    @Override
+    public Room findById(Long id) {
+        return roomRepository.getById(id);
+    }
+
+    @Override
+    public void save(Room room) {
+        roomRepository.save(room);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        roomRepository.deleteById(id);
+    }
+
 }
