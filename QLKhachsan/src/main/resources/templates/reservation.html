@@ -176,28 +176,25 @@
             </div>
             <div class="col-md-4 col-md-pull-7">
               <div class="booking-form">
-                <form>
-                  <div class="form-group">
-                    <span class="form-label">Room Type</span>
-                    <select class="form-control" th:each="room: ${rooms}" required>
-<!--                      <option value="">Select</option>-->
-                      <option value="AC" th:text="${room.type}">classic Double room</option>
-<!--                      <option value="AC">classic Double room</option>-->
-<!--                      <option value="AC">classic Double room</option>-->
-<!--                      <option value="AC">classic Double room</option>-->
-                    </select>
-                  </div>
+                <form th:action="@{/hotel/booking}" method="post" th:object="${booking}">
+<!--                  <div class="form-group">-->
+<!--                    <span class="form-label">Room Type</span>-->
+<!--                    <select class="form-control" th:each="room: ${rooms}" required>-->
+<!--                      <option value="AC" th:text="${room.type}">classic Double room</option>-->
+<!--                    </select>-->
+<!--                  </div>-->
+<!--                    <input class="form-control" type="hidden" required th:field="*{timeEnd}"/>-->
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="form-group">
                         <span class="form-label">Check In</span>
-                        <input class="form-control" type="date" required />
+                        <input class="form-control" type="date" required th:field="*{timeBegin}"/>
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="form-group">
                         <span class="form-label">Check out</span>
-                        <input class="form-control" type="date" required />
+                        <input class="form-control" type="date" required th:field="*{timeEnd}"/>
                       </div>
                     </div>
                   </div>
@@ -205,12 +202,12 @@
                     <div class="col-sm-4">
                       <div class="form-group">
                         <span class="form-label">Rooms</span>
-                        <select class="form-control" required>
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
+                        <select class="form-control" th:field="*{room_name}" required>
+<!--                          <option th:text="*{room.roomName}">1</option>-->
+                            <option th:each="room: ${roomName}" id="roomeType" th:value="${room}" th:text="${room}">
+                            </option>
                         </select>
-                        <span class="select-arrow"></span>
+<!--                        <span class="select-arrow"></span>-->
                       </div>
                     </div>
 <!--                    <div class="col-sm-4">-->

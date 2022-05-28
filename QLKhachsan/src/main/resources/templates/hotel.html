@@ -99,17 +99,13 @@
     </style>
 <!--    <style th:inline="text">-->
 <!--        #hotel-header #hotel-header&#45;&#45;bg-image {-->
-<!--            background-image: url(static/media/images/pearl-river-hotel-home1.jpg);-->
-<!--            background-image: url{[[@{/img/Background.jpg}]]};-->
-<!--            background-size: cover;-->
-<!--            background-position: center;-->
-<!--            background-repeat: no-repeat;-->
+<!--            background: url{[[${hotel.imagePath}]]};-->
 <!--        }-->
 <!--    </style>-->
 </head>
 <body>
 <header id="hotel-header">
-    <div id="hotel-header--bg-image" th:style="'background:url(static/media/images/'+ ${hotel.imagePath} +');'">
+    <div id="hotel-header--bg-image" th:style="'background:url(../'+ ${hotel.imagePath} +');'">
         <nav class="navbar navbar-expand-md px-md-5">
             <a class="navbar-brand" th:href="@{/}">Trang chủ</a>
 <!--            <button-->
@@ -210,13 +206,13 @@
     <section id="featured-rooms">
         <div class="container my-5 py-5">
             <div class="section-title">
-                <h2>Rooms</h2>
+                <h3>Rooms</h3>
             </div>
-            <div class="row custom-room-cards">
-                <div class="col col-md-3">
-                    <div class="card" th:each="room: ${hotel.rooms}">
+            <div class="row custom-room-cards" th:each="room: ${rooms}" style="display: flex">
+                <div class="col col-md-3" style="display: inline-block">
+                    <div class="card">
                         <div class="card-body">
-                            <img th:src="@{'./media/images/rooms/'+ ${room.imagePath}}" alt="" />
+                            <img th:src="@{ ${'/' + room.imagePath} }" alt="" />
                         </div>
                         <div class="card-footer">
                             <div class="footer-head">
@@ -224,7 +220,7 @@
                                 <span class="price" th:text="${room.price}"></span>
                             </div>
                             <div class="footer-body">
-<!--                                <span class="footer-body" th:text="${room.roomName}></span>-->
+                                <span class="footer-body" th:text="${room.roomName}"></span>
                             </div>
                         </div>
                     </div>
@@ -237,33 +233,20 @@
         <div class="container my-5 py-5">
             <div class="row">
                 <div class="col-md-7">
-                    <div class="card-container">
-                        <div class="card">
-                            <div class="card-body">
-                                <img th:src="@{./media/images/backgrounds/home-1.jpg}" alt="" />
-                            </div>
-                            <div class="card-footer">
-                                <div class="footer-head">
-                                    <div class="label">Premium</div>
-                                    <div class="price">$120/day</div>
-                                </div>
-                                <div class="footer-body">Daimond Suite</div>
-                                <!-- <div class="footer-foot">lemon</div> -->
-                            </div>
-                        </div>
+                    <div class="card-container" th:if="${lastestComment}">
 
                         <!-- <div class="spacer"></div>
                         <div class="spacer"></div> -->
                         <div class="card">
                             <div class="card-body">
-                                <img th:src="@{./media/images/backgrounds/home-2.jpg}" alt="" />
+                                <img th:src="@{/media/images/icon/anonymous.jpg}" alt="" />
                             </div>
                             <div class="card-footer">
-                                <div class="footer-head">
-                                    <div class="label">Premium</div>
-                                    <div class="price">$120/day</div>
-                                </div>
-                                <div class="footer-body">Daimond Suite</div>
+<!--                                <div class="footer-head">-->
+<!--                                    <div class="label">Premium</div>-->
+<!--                                    <div class="price">$120/day</div>-->
+<!--                                </div>-->
+                                <div class="footer-body" th:text="${lastestComment.body}"></div>
                                 <!-- <div class="footer-foot">lemon</div> -->
                             </div>
                         </div>
@@ -285,8 +268,8 @@
     </section>
 
     <section id="comment">
-        <form>
-            <input type="text" placeholder="Write something...">
+        <form th:action="@{/hotel/comment}" th:object="${newComment}" method="post">
+            <input type="text" placeholder="Write something..." th:field="*{body}">
             <button>Submit</button>
         </form>
     </section>

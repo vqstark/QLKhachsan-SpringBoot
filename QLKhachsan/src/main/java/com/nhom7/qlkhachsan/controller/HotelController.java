@@ -1,15 +1,15 @@
 package com.nhom7.qlkhachsan.controller;
 
+import com.nhom7.qlkhachsan.dto.BookingDTO;
 import com.nhom7.qlkhachsan.entity.hotel.BookingRoom;
 import com.nhom7.qlkhachsan.entity.hotel.Hotel;
 import com.nhom7.qlkhachsan.entity.hotel.Room;
 import com.nhom7.qlkhachsan.entity.rating.Comment;
 import com.nhom7.qlkhachsan.entity.rating.Follow;
 import com.nhom7.qlkhachsan.entity.user.User;
-import com.nhom7.qlkhachsan.repository.BookingRepository;
-import com.nhom7.qlkhachsan.repository.FollowRepository;
-import com.nhom7.qlkhachsan.repository.UserRepository;
+import com.nhom7.qlkhachsan.repository.*;
 import com.nhom7.qlkhachsan.service.HotelService;
+import com.nhom7.qlkhachsan.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,19 +31,31 @@ public class HotelController {
     private HotelService hotelService;
 
     @Autowired
+    private RoomService roomService;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private BookingRepository bookingRepository;
 
+    @Autowired
+    private CommentRepository commentRepository;
 
+    @Autowired
+    private RoomRepository roomRepository;
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_USER')")
     public String getUIHotel(@PathVariable Long id, Model model){
         Hotel hotel = hotelService.getHotelByID(id);
         model.addAttribute("hotel", hotel);
-        model.addAttribute("rooms", hotelService.getAllByHotelID(hotel.getId()));
+        model.addAttribute("rooms", hotelService.getSomeRoomInType(hotel.getId()));
+        model.addAttribute("newComment", new Comment());
+        Comment lastestComment = hotelService.getLastestComment(id);
+        model.addAttribute("lastestComment", lastestComment);
+        if(lastestComment==null)
+            model.addAttribute("lastestComment", "no");
 
         Follow fl = hotelService.getFollowByUserAndHotel(getCurrentUser().getId(), id);
 
@@ -56,18 +69,40 @@ public class HotelController {
     @GetMapping("/{id}/booking")
     public String getUIbookingRoom(@PathVariable Long id, Model model){
         Hotel hotel = hotelService.getHotelByID(id);
-        List<Room> rooms = hotelService.getAllByHotelID(id);
+        List<Room> rooms = roomService.getEmptyRooms(id);
         model.addAttribute("hotel", hotel);
         model.addAttribute("rooms", rooms);
-        model.addAttribute("booking", new BookingRoom());
+
+//        BookingRoom bookingRoom = new BookingRoom();
+//        model.addAttribute("booking", bookingRoom);
+        model.addAttribute("booking", new BookingDTO());
+        List<String> roomName = new ArrayList<String>();
+
+        for(Room r: rooms)
+        {
+            roomName.add(r.getRoomName());
+        }
+        model.addAttribute("roomName", roomName);
         return "reservation";
     }
 
-    @PostMapping("/{id}/booking")
-    public String bookingRoom(@PathVariable String name, BookingRoom bookingRoom){
+    @PostMapping("/booking")
+    public String bookingRoom(BookingDTO bookingDTO, Model model){
+        BookingRoom bookingRoom = new BookingRoom();
         bookingRoom.setUserBook(getCurrentUser());
+        Room room = roomRepository.findByRoomName(bookingDTO.getRoom_name());
+        bookingRoom.setRoomIsBooked(room);
+//        bookingRoom.setUserBook(getCurrentUser());
+//        Hotel hotel = (Hotel)model.getAttribute("hotel");
+//        String roomName = (String)model.getAttribute("roomName");
+//        System.out.println(roomName);
+//        bookingRoom.setRoomIsBooked(room);
+        bookingRoom.setTimeBegin(bookingDTO.getTimeBegin());
+        bookingRoom.setTimeEnd(bookingDTO.getTimeEnd());
+        bookingRoom.setPaid(false);
+        bookingRoom.setPrice(room.getPrice()*5);
         bookingRepository.save(bookingRoom);
-        return "bookingSuccessful";
+        return "index";
     }
 
     @GetMapping("/follow/{id}")
@@ -75,6 +110,12 @@ public class HotelController {
         hotelService.followHotel(getCurrentUser(), id);
         Hotel hotel = hotelService.getHotelByID(id);
         model.addAttribute("hotel", hotel);
+        model.addAttribute("newComment", new Comment());
+        Comment lastestComment = hotelService.getLastestComment(id);
+        model.addAttribute("lastestComment", lastestComment);
+        if(lastestComment==null)
+            model.addAttribute("lastestComment", "no");
+
 //        model.addAttribute("rooms", hotelService.getAllByHotelID(hotel.getId()));
 //        Follow fl = hotelService.getFollowByUserAndHotel(getCurrentUser().getId(), id);
         String status = "unfollow";
@@ -88,6 +129,12 @@ public class HotelController {
         hotelService.unfollowHotel(getCurrentUser(), id);
         Hotel hotel = hotelService.getHotelByID(id);
         model.addAttribute("hotel", hotel);
+        model.addAttribute("newComment", new Comment());
+        Comment lastestComment = hotelService.getLastestComment(id);
+        model.addAttribute("lastestComment", lastestComment);
+        if(lastestComment==null)
+            model.addAttribute("lastestComment", "no");
+
 //        model.addAttribute("rooms", hotelService.getAllByHotelID(hotel.getId()));
 //        Follow fl = hotelService.getFollowByUserAndHotel(getCurrentUser().getId(), id);
 
@@ -97,14 +144,22 @@ public class HotelController {
         return "hotel";
     }
 
-//    @PostMapping("/comment/{id}")
-//    public String userComment(@PathVariable Long id){
-//        Comment comment = new Comment();
-//        follow.setUserFollow(getCurrentUser());
-//        follow.setHotelIsFollowed(hotelService.getHotelByID(id));
-//        followRepository.save(follow);
-//        return "bookingSuccessful";
-//    }
+    @PostMapping("/comment")
+    public String commentHotel(Comment comment, Model model){
+        System.out.println("Comment" + comment);
+        Hotel hotel = (Hotel)model.getAttribute("hotel");
+        comment.setUserComment(getCurrentUser());
+        comment.setHotelIsCommented(hotel);
+        commentRepository.save(comment);
+        model.addAttribute("hotel", hotel);
+        model.addAttribute("newComment", new Comment());
+        Comment lastestComment = hotelService.getLastestComment(hotel.getId());
+        model.addAttribute("lastestComment", lastestComment);
+        if(lastestComment==null)
+            model.addAttribute("lastestComment", "no");
+        System.out.println("Comment successfully");
+        return "hotel";
+    }
 
     private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

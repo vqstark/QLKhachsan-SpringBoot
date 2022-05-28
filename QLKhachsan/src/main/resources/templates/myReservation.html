@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My reservations</title>
+</head>
+<body>
+<table border=1>
+    <tr>
+        <td>Room</td>
+        <td>Check in</td>
+        <td>Check out</td>
+        <td>Price</td>
+        <td>Status</td>
+    </tr>
+    <tr th:each="re: ${MyReservation}">
+        <td th:text="${re.room_name}"></td>
+        <td th:text="${re.timeBegin}"></td>
+        <td th:text="${re.timeEnd}"></td>
+        <td th:text="${re.price}"></td>
+        <td th:text="${re.isPaid}"></td>
+    </tr>
+</table>
+</body>
+</html>

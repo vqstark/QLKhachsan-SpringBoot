@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
 
         http.authorizeRequests()
-                .antMatchers("/rooms/**", "/reservation/**", "/hotel/**").access("hasAnyRole('ROLE_MANAGER','ROLE_USER')");
+                .antMatchers("/rooms/**", "/reservation/**", "/hotel/**", "/my_reservation/**").access("hasAnyRole('ROLE_MANAGER','ROLE_USER')");
 
         http.authorizeRequests()
                 .antMatchers("/admin/**").access("hasRole('ROLE_MANAGER')");

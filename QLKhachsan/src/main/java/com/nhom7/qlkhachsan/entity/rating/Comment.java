@@ -22,8 +22,8 @@ public class Comment extends BaseEntity {
     @JoinColumn(name="hotel_id", nullable = false)
     private Hotel hotelIsCommented;
 
-    @NotBlank
-    @NotNull
+//    @NotBlank
+//    @NotNull
     @Size(max = 100)
     private String body;
 }

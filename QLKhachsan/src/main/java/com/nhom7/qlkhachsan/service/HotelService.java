@@ -2,6 +2,7 @@ package com.nhom7.qlkhachsan.service;
 
 import com.nhom7.qlkhachsan.entity.hotel.Hotel;
 import com.nhom7.qlkhachsan.entity.hotel.Room;
+import com.nhom7.qlkhachsan.entity.rating.Comment;
 import com.nhom7.qlkhachsan.entity.rating.Follow;
 import com.nhom7.qlkhachsan.entity.user.User;
 
@@ -18,6 +19,8 @@ public interface HotelService {
 
     List<Room> getAllByHotelID(Long id);
 
+    List<Room> getSomeRoomInType(Long idHotel);
+
     Hotel addHotel(Hotel hotel);
 
     Follow getFollowByUserAndHotel(Long userId, Long hotelId);
@@ -25,6 +28,12 @@ public interface HotelService {
     void followHotel(User user, Long hotelID);
 
     void unfollowHotel(User user, Long hotelID);
+
+    void commentHotel(User user, Long hotelID);
+
+    List<Comment> getCommentByUserAndHotel(Long userId, Long hotelId);
+
+    Comment getLastestComment(Long hotelId);
     
     void deleteById(Long id);
 

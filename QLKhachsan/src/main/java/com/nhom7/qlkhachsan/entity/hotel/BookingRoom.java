@@ -20,10 +20,10 @@ public class BookingRoom extends BaseEntity {
     private Room roomIsBooked;
 
     @Column(nullable = false)
-    private Date timeBegin;
+    private String timeBegin;
 
     @Column(nullable = false)
-    private Date timeEnd;
+    private String timeEnd;
 
     @Column(nullable = false)
     private Double price;

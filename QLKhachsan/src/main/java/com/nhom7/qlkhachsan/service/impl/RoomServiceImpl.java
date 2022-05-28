@@ -6,6 +6,8 @@ import com.nhom7.qlkhachsan.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoomServiceImpl implements RoomService {
     @Autowired
@@ -13,5 +15,10 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Room addRoom(Room room) {
         return roomRepository.save(room);
+    }
+
+    @Override
+    public List<Room> getEmptyRooms(Long idHotel) {
+        return roomRepository.findAllByHotelHasRoomsIdAndStatus(idHotel, true);
     }
 }

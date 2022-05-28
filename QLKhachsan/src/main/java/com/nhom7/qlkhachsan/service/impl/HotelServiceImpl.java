@@ -2,12 +2,10 @@ package com.nhom7.qlkhachsan.service.impl;
 
 import com.nhom7.qlkhachsan.entity.hotel.Hotel;
 import com.nhom7.qlkhachsan.entity.hotel.Room;
+import com.nhom7.qlkhachsan.entity.rating.Comment;
 import com.nhom7.qlkhachsan.entity.rating.Follow;
 import com.nhom7.qlkhachsan.entity.user.User;
-import com.nhom7.qlkhachsan.repository.BookingRepository;
-import com.nhom7.qlkhachsan.repository.FollowRepository;
-import com.nhom7.qlkhachsan.repository.HotelRepository;
-import com.nhom7.qlkhachsan.repository.RoomRepository;
+import com.nhom7.qlkhachsan.repository.*;
 import com.nhom7.qlkhachsan.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +26,9 @@ public class HotelServiceImpl implements HotelService {
 
     @Autowired
     private FollowRepository followRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Override
     public List<Hotel> getAll() {
@@ -52,6 +53,11 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public List<Room> getAllByHotelID(Long id) {
         return roomRepository.getAllRoomsByHotelID(id);
+    }
+
+    @Override
+    public List<Room> getSomeRoomInType(Long idHotel) {
+        return roomRepository.getAllByHotelHasRoomsId(idHotel);
     }
 
     @Override
@@ -80,7 +86,27 @@ public class HotelServiceImpl implements HotelService {
         followRepository.delete(follow);
         System.out.println("Unfollow successfully");
     }
-    
+
+    @Override
+    public void commentHotel(User user, Long hotelID) {
+        Comment comment = new Comment();
+        Hotel hotel = hotelRepository.getById(hotelID);
+        comment.setUserComment(user);
+        comment.setHotelIsCommented(hotel);
+        commentRepository.save(new Comment());
+        System.out.println("Comment successfully");
+    }
+
+    @Override
+    public List<Comment> getCommentByUserAndHotel(Long userId, Long hotelId) {
+        return commentRepository.findByUserCommentIdAndHotelIsCommentedId(userId, hotelId);
+    }
+
+    @Override
+    public Comment getLastestComment(Long hotelId) {
+        return commentRepository.findByHotelIsCommentedId(hotelId);
+    }
+
     @Override
     public void deleteById(Long id) {
         hotelRepository.deleteById(id);
