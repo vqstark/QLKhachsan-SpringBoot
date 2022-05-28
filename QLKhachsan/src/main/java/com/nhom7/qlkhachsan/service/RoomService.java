@@ -5,4 +5,12 @@ import org.springframework.stereotype.Service;
 
 public interface RoomService {
     Room addRoom(Room room);
+    
+    List<Room> getAllRooms(Long id);
+
+    Room findById(Long id);
+
+    void save(Room room);
+    
+    void deleteById(Long id);
 }
