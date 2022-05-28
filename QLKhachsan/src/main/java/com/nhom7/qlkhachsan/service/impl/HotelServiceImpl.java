@@ -82,6 +82,11 @@ public class HotelServiceImpl implements HotelService {
     }
     
     @Override
+    public List<Hotel> getHotelsByOwner(User user) {
+        return hotelRepository.findAllByOwner(user);
+    }
+    
+    @Override
     public void deleteById(Long id) {
         hotelRepository.deleteById(id);
     }
