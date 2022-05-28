@@ -80,5 +80,14 @@ public class HotelServiceImpl implements HotelService {
         followRepository.delete(follow);
         System.out.println("Unfollow successfully");
     }
+    
+    @Override
+    public void deleteById(Long id) {
+        hotelRepository.deleteById(id);
+    }
 
+    @Override
+    public void updateHotel(Hotel hotel) {
+        hotelRepository.save(hotel);
+    }
 }
