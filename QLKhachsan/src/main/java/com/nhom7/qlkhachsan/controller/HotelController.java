@@ -20,9 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/reservation")
-public class ReservationController {
-
+@RequestMapping("/hotel")
+public class HotelController {
     @Autowired
     private HotelService hotelService;
 
@@ -32,36 +31,30 @@ public class ReservationController {
     @Autowired
     private BookingRepository bookingRepository;
 
-    @GetMapping()
-    public String loadPageReservation(Model model) {
-        List<Hotel> hotels = hotelService.getAll();
-        model.addAttribute("hotels", hotels);
-        return "showHotels";
+    @GetMapping("/{name}")
+    public String getUIHotel(@PathVariable String name, Model model){
+        Hotel hotel = hotelService.getHotelByName(name);
+        model.addAttribute("hotel", hotel);
+        model.addAttribute("rooms", hotelService.getAllByHotelID(hotel.getId()));
+        return "hotel";
     }
 
-    @GetMapping("/search={name}")
-    public String searchHotel(@PathVariable String name, Model model){
-        List<Hotel> hotels = hotelService.searchHotelByName(name);
-        model.addAttribute("hotels", hotels);
-        return "";
+    @GetMapping("/{name}/booking")
+    public String getUIbookingRoom(@PathVariable String name, Model model){
+        Hotel hotel = hotelService.getHotelByName(name);
+        List<Room> rooms = hotelService.getAllByHotelID(hotel.getId());
+        model.addAttribute("hotel", hotel);
+        model.addAttribute("rooms", rooms);
+        model.addAttribute("booking", new BookingRoom());
+        return "reservation";
     }
 
-//    @GetMapping("/hotel={name}")
-//    public String getUIbookingRoom(@PathVariable String name, Model model){
-//        Hotel hotel = hotelService.getHotelByName(name);
-//        List<Room> rooms = hotelService.getAllByHotelID(hotel.getId());
-//        model.addAttribute("hotel", hotel);
-//        model.addAttribute("rooms", rooms);
-//        model.addAttribute("booking", new BookingRoom());
-//        return "reservation";
-//    }
-
-//    @PostMapping("/hotel={name}")
-//    public String bookingRoom(@PathVariable String name, BookingRoom bookingRoom){
-//        bookingRoom.setUserBook(getCurrentUser());
-//        bookingRepository.save(bookingRoom);
-//        return "bookingSuccessful";
-//    }
+    @PostMapping("/{name}/booking")
+    public String bookingRoom(@PathVariable String name, BookingRoom bookingRoom){
+        bookingRoom.setUserBook(getCurrentUser());
+        bookingRepository.save(bookingRoom);
+        return "bookingSuccessful";
+    }
 
     private User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

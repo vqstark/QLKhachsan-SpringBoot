@@ -8,7 +8,7 @@
 <body>
     <h1>We'll help you choose best hotel</h1>
     <div th:each="hotel: ${hotels}">
-        <a th:href="@{'/reservation/hotel=' + ${hotel.name}}">
+        <a th:href="@{'/hotel/' + ${hotel.name}}">
             <span th:text="${hotel.name}"></span>
         </a>
     </div>

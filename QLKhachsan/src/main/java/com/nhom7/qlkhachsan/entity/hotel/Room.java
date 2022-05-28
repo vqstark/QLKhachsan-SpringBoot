@@ -20,6 +20,8 @@ public class Room extends BaseEntity {
 
     private String description;
 
+    private String imagePath;
+
     @Column(nullable = false)
     private boolean status; // false: Room was booked
 
