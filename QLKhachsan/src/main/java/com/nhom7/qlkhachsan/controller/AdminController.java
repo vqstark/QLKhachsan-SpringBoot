@@ -62,7 +62,7 @@ public class AdminController {
         try (OutputStream os = Files.newOutputStream(file)) {
             os.write(image.getBytes());
         }
-        hotel.setImagePath(staticPath.resolve(image.getOriginalFilename()).toString());
+        hotel.setImagePath(staticPath.resolve(image.getOriginalFilename()).toString().substring(37));
         hotel.setOwner(getCurrentUser());
         hotelService.addHotel(hotel);
         return "redirect:/admin";
@@ -78,7 +78,7 @@ public class AdminController {
         try (OutputStream os = Files.newOutputStream(file)) {
             os.write(image.getBytes());
         }
-        room.setImagePath(staticPath.resolve(image.getOriginalFilename()).toString());
+        room.setImagePath(staticPath.resolve(image.getOriginalFilename()).toString().substring(37));
         room.setStatus(true);
         roomService.addRoom(room);
         return "redirect:/admin";
@@ -112,7 +112,7 @@ public class AdminController {
             os.write(image.getBytes());
         }
         hotel.setId(id);
-        hotel.setImagePath(staticPath.resolve(image.getOriginalFilename()).toString());
+        hotel.setImagePath(staticPath.resolve(image.getOriginalFilename()).toString().substring(37));
         hotel.setOwner(getCurrentUser());
         hotelService.updateHotel(hotel);
         return "redirect:/admin/hotels";

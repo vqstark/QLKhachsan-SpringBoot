@@ -118,7 +118,7 @@
                     <div class="col col-md-3">
                         <div class="card" th:each="hotel: ${hotels}">
                             <div class="card-body">
-                                <img th:src="@{hotel.imagePath}" alt=""/>
+                                <img th:src="@{ ${'/' + hotel.imagePath} }"/>
                             </div>
                             <div class="card-footer">
                                 <div class="footer-head">
