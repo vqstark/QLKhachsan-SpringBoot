@@ -21,6 +21,9 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
     Optional<Hotel> findById(Long id);
 
     List<Hotel> findAllByNameContaining(String name);
+    
+    Hotel save(Hotel hotel);
+    void deleteById(Long id);
 
 //    @Query(value = "select * from hotel h where h.name = name " +
 //            "union select * from hotel h where h.address = address", nativeQuery = true)
