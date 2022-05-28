@@ -100,10 +100,10 @@
                 </div>
                 <form th:action="@{/admin/deleteHotel/{id}(id=${id})}" method="post">
                     <a>
-                        <button type="submit" class="submit-btn" style="color: red">Xóa</button>
+                        <button type="submit" class="submit-btn" style="color: red">Delete</button>
                     </a>
                     <a th:href="@{/admin/hotels}" style="margin-left: 5px">
-                        <button class="submit-btn">Quay lại</button>
+                        <button class="submit-btn" type="button">Back</button>
                     </a>
                 </form>
             </div>
