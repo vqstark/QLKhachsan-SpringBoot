@@ -34,13 +34,20 @@
 
     <title th:text="${hotel.name}"></title>
     <style>
+        .div-more-inf {
+            display: block;
+            margin-bottom: 30px;
+        }
+        .more-inf {
+            font-weight: bold;
+        }
         #hotel-header {
             width: 100%;
             height: 100vh;
             background-color: rgba(0, 0, 0, 0.5);
         }
         #hotel-header #hotel-header--bg-image {
-            background-image: url("../media/images/pearl-river-hotel-home1.jpg");
+            /*background-image: url("../media/images/pearl-river-hotel-home1.jpg");*/
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -61,11 +68,48 @@
             font-size: 3em;
             opacity: 0.7;
         }
+
+        .wrapper {
+            display: flex;
+            /*justify-content: space-around;*/
+        }
+
+        .form-group {
+            margin-left: 20px;
+        }
+
+        #comment {
+            display: block;
+            text-align: center;
+        }
+
+        #comment > form > input {
+            width: 300px;
+            height: 40px;
+            padding-left: 15px;
+        }
+
+        #comment > form > button {
+            background-color: #1e62d8;
+            height: 40px;
+            width: 80px;
+            color: white;
+            border-radius: 5px;
+        }
     </style>
+<!--    <style th:inline="text">-->
+<!--        #hotel-header #hotel-header&#45;&#45;bg-image {-->
+<!--            background-image: url(static/media/images/pearl-river-hotel-home1.jpg);-->
+<!--            background-image: url{[[@{/img/Background.jpg}]]};-->
+<!--            background-size: cover;-->
+<!--            background-position: center;-->
+<!--            background-repeat: no-repeat;-->
+<!--        }-->
+<!--    </style>-->
 </head>
 <body>
 <header id="hotel-header">
-    <div id="hotel-header--bg-image">
+    <div id="hotel-header--bg-image" th:style="'background:url(static/media/images/'+ ${hotel.imagePath} +');'">
         <nav class="navbar navbar-expand-md px-md-5">
             <a class="navbar-brand" th:href="@{/}">Trang chủ</a>
 <!--            <button-->
@@ -81,21 +125,6 @@
 <!--            </button>-->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link" th:href="@{/}">Home</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link" th:href="@{/rooms}">Rooms</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link" th:href="@{/reservation}"-->
-<!--                        >Reservations</a-->
-<!--                        >-->
-<!--                    </li>-->
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link" th:href="@{/subcribe}">Become a hotel manager</a>-->
-<!--                    </li>-->
-
                     <li class="nav-item dropdown">
                         <a
                                 class="nav-link dropdown-toggle"
@@ -139,82 +168,42 @@
 <main>
     <section id="home-form">
         <div class="wrapper">
-<!--            <form id="find-available-rooms-form">-->
-<!--                <div class="form-group">-->
-<!--                    <label for="check-in">Check in</label>-->
-<!--                    <input-->
-<!--                            type="hidden"-->
-<!--                            id="check-in"-->
-<!--                            class="form-control"-->
-<!--                            name="check-in"-->
-<!--                    />-->
-<!--                    <button id="check-in-button" class="btn input-button">-->
-<!--                        Check in date-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label for="check-in">Check out</label>-->
-<!--                    <input-->
-<!--                            type="hidden"-->
-<!--                            id="check-out"-->
-<!--                            class="form-control"-->
-<!--                            name="check-out"-->
-<!--                            value=""-->
-<!--                    />-->
-<!--                    <button id="check-out-button" class="btn input-button">-->
-<!--                        Check out date-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--                <div class="form-group">-->
-<!--                    <label for="form-dropdown">Guests</label>-->
-<!--                    <button-->
-<!--                            class="btn dropdown-toggle"-->
-<!--                            id="form-dropdown"-->
-<!--                            role="button"-->
-<!--                            data-toggle="dropdown"-->
-<!--                            aria-haspopup="true"-->
-<!--                            aria-expanded="false"-->
-<!--                    >-->
-<!--                        Add guests-->
-<!--                    </button>-->
-<!--                    <ul class="dropdown-menu" aria-labelledby="form-dropdown">-->
-<!--                        <li class="dropdown-menu-item">-->
-<!--                            <div class="form-group form-group-nested">-->
-<!--                                <label for="count-adults">Adults</label>-->
-<!--                                <input-->
-<!--                                        type="number"-->
-<!--                                        class="form-control"-->
-<!--                                        name="count-adults"-->
-<!--                                        placeholder="Ages 13 or above"-->
-<!--                                />-->
-<!--                            </div>-->
-<!--                            <div class="form-group form-group-nested">-->
-<!--                                <label for="count-children">Children</label>-->
-<!--                                <input-->
-<!--                                        type="number"-->
-<!--                                        class="form-control"-->
-<!--                                        name="count-children"-->
-<!--                                        placeholder="Ages 1-12"-->
-<!--                                />-->
-<!--                            </div>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-                <div class="form-group">
-                    <a th:href="@{'/hotel/' + ${hotel.name} + '/booking'}">
-                        <button type="submit" class="btn btn-primary" name="find-rooms">
-                            Booking Room
-                        </button>
-                    </a>
-                </div>
-<!--            </form>-->
+            <div class="form-group">
+                <a th:href="@{'/hotel/' + ${hotel.id} + '/booking'}">
+                    <button type="submit" class="btn btn-primary" name="find-rooms">
+                        Booking Room
+                    </button>
+                </a>
+            </div>
+            <div class="form-group" th:switch="${status}">
+                <a th:href="@{'/hotel/follow/' + ${hotel.id}}" th:case="follow">
+                    <button type="submit" class="btn btn-primary" name="find-rooms">
+                        Follow
+                    </button>
+                </a>
+
+                <a th:href="@{'/hotel/unfollow/' + ${hotel.id}}" th:case="unfollow">
+                    <button type="submit" class="btn btn-primary" name="find-rooms">
+                        Unfollow
+                    </button>
+                </a>
+            </div>
         </div>
     </section>
     <!--Description -->
-    <section>
-        <span th:text="${hotel.description}"></span>
-        <span th:text="${hotel.address}"></span>
-        <span th:text="${hotel.phoneNumber}"></span>
+    <section style="padding-left: 160px">
+        <div class="div-more-inf">
+            <span class="more-inf">Description:</span>
+            <span th:text="${hotel.description}"></span>
+        </div>
+        <div class="div-more-inf">
+            <span class="more-inf">Address:</span>
+            <span th:text="${hotel.address}"></span>
+        </div>
+        <div class="div-more-inf">
+            <span class="more-inf">Phone Number:</span>
+            <span th:text="${hotel.phoneNumber}"></span>
+        </div>
     </section>
 
     <!-- Featured Rooms -->
@@ -234,102 +223,10 @@
                                 <div class="label">Premium</div>
                                 <span class="price" th:text="${room.price}"></span>
                             </div>
-                            <span class="footer-body" th:text="${room.roomName}></span>
-                             <div class="footer-foot">lemon</div>
+                            <div class="footer-body">
+<!--                                <span class="footer-body" th:text="${room.roomName}></span>-->
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-<!--                <div class="col col-md-3">-->
-<!--                    <div class="card">-->
-<!--                        <div class="card-body">-->
-<!--                            <img th:src="@{./media/images/rooms/2.jpg}" alt="" />-->
-<!--                        </div>-->
-<!--                        <div class="card-footer">-->
-<!--                            <div class="footer-head">-->
-<!--                                <div class="label">Premium</div>-->
-<!--                                <div class="price">$120/day</div>-->
-<!--                            </div>-->
-<!--                            <div class="footer-body">Daimond Suite</div>-->
-<!--                            &lt;!&ndash; <div class="footer-foot">lemon</div> &ndash;&gt;-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col col-md-3">-->
-<!--                    <div class="card">-->
-<!--                        <div class="card-body">-->
-<!--                            <img th:src="@{./media/images/rooms/3.jpg}" alt="" />-->
-<!--                        </div>-->
-<!--                        <div class="card-footer">-->
-<!--                            <div class="footer-head">-->
-<!--                                <div class="label">Premium</div>-->
-<!--                                <div class="price">$120/day</div>-->
-<!--                            </div>-->
-<!--                            <div class="footer-body">Daimond Suite</div>-->
-<!--                            &lt;!&ndash; <div class="footer-foot">lemon</div> &ndash;&gt;-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col col-md-3">-->
-<!--                    <div class="card">-->
-<!--                        <div class="card-body">-->
-<!--                            <img th:src="@{./media/images/rooms/4.jpg}" alt="" />-->
-<!--                        </div>-->
-<!--                        <div class="card-footer">-->
-<!--                            <div class="footer-head">-->
-<!--                                <div class="label">Premium</div>-->
-<!--                                <div class="price">$120/day</div>-->
-<!--                            </div>-->
-<!--                            <div class="footer-body">Daimond Suite</div>-->
-<!--                            &lt;!&ndash; <div class="footer-foot">lemon</div> &ndash;&gt;-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-                <!-- <div class="col col-md-4">
-                  <div class="img-wrapper">
-                    <img th:src="" alt="Room photo" />
-                  </div>
-                  <div class="content">
-                    <div class="title">Deluxe Suite</div>
-                    <div class="price">$&nbsp;<span class="value">480</span></div>
-                    <div class="book-room">
-                      <a th:href="#">Book this room</a>
-                    </div>
-                  </div>
-                </div> -->
-            </div>
-        </div>
-    </section>
-
-    <section id="decoration-accomodation">
-        <div class="container my-5 py-5">
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="content">
-                        <div class="section-title">
-                            <h2>Choose the perfect accomodation</h2>
-                        </div>
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos
-                            illum veniam qui veritatis praesentium voluptates atque enim
-                            quia exercitationem ipsa quaerat, delectus officia dolore rem
-                            consequatur nesciunt. Ullam, consequuntur necessitatibus.m
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-7 card-container">
-                    <div class="card">
-                        <div class="card-body">
-                            <img th:src="@{./media/images/backgrounds/home-1.jpg}" alt="" />
-                        </div>
-                        <div class="card-footer">lemon</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <img th:src="@{./media/images/backgrounds/home-2.jpg}" alt="" />
-                        </div>
-                        <div class="card-footer">lemon</div>
                     </div>
                 </div>
             </div>
@@ -376,13 +273,10 @@
                 <div class="col-md-5">
                     <div class="content">
                         <div class="section-title">
-                            <h2>Premium deals for your premium needs</h2>
+                            <h2>Their Experiences</h2>
                         </div>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eos
-                            illum veniam qui veritatis praesentium voluptates atque enim
-                            quia exercitationem ipsa quaerat, delectus officia dolore rem
-                            consequatur nesciunt. Ullam, consequuntur necessitatibus.m
+                            Write your experience with our hotel.
                         </p>
                     </div>
                 </div>
@@ -390,7 +284,14 @@
         </div>
     </section>
 
-    <section id="home-banner">
+    <section id="comment">
+        <form>
+            <input type="text" placeholder="Write something...">
+            <button>Submit</button>
+        </form>
+    </section>
+
+    <div id="home-banner">
         <div class="banner">
             <div class="container">
                 <div class="jumbotron">
@@ -399,7 +300,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </main>
 
 <!-- Footer -->
