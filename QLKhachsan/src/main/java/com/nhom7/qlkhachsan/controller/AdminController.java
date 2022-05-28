@@ -12,10 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -23,6 +20,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -93,7 +91,7 @@ public class AdminController {
     }
      @GetMapping("/hotels")
     public String listHotel(Model model) {
-        List<Hotel> hotels = hotelService.getAll();
+        List<Hotel> hotels = hotelRepository.findAllByOwner(getCurrentUser());
         model.addAttribute("hotels", hotels);
         return "/admin/rooms/showHotel";
     }
