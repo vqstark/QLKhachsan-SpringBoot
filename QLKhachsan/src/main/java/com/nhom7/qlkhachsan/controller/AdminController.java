@@ -91,4 +91,44 @@ public class AdminController {
         String username = auth.getName();
         return userService.findByUserName(username);
     }
+     @GetMapping("/hotels")
+    public String listHotel(Model model) {
+        List<Hotel> hotels = hotelService.getAll();
+        model.addAttribute("hotels", hotels);
+        return "/admin/rooms/showHotel";
+    }
+
+    @GetMapping("/editHotel/{id}")
+    public String editHotel(@PathVariable Long id, Model model ) {
+        model.addAttribute("hotel", hotelService.getHotelByID(id));
+        return "/admin/rooms/editHotel";
+    }
+    @PostMapping("/editHotel/{id}")
+    public String editHotel(@PathVariable Long id,Hotel hotel, @RequestParam("file") MultipartFile image) throws IOException {
+        Path staticPath = Paths.get("QLKhachsan\\src\\main\\resources\\static\\media\\images\\hotel_and_room_images");
+        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath))) {
+            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath));
+        }
+        Path file = CURRENT_FOLDER.resolve(staticPath).resolve(image.getOriginalFilename());
+        try (OutputStream os = Files.newOutputStream(file)) {
+            os.write(image.getBytes());
+        }
+        hotel.setId(id);
+        hotel.setImagePath(staticPath.resolve(image.getOriginalFilename()).toString());
+        hotel.setOwner(getCurrentUser());
+        hotelService.updateHotel(hotel);
+        return "redirect:/admin/hotels";
+    }
+
+    @GetMapping("/deleteHotel/{id}")
+    public String deleteHotel(@PathVariable Long id, Model model) {
+        model.addAttribute("id", id);
+        return "/admin/rooms/deleteHotel";
+    }
+
+    @PostMapping("/deleteHotel/{id}")
+    public String deleteHotel(@PathVariable Long id) {
+        hotelService.deleteById(id);
+        return "redirect:/admin/hotels";
+    }
 }
