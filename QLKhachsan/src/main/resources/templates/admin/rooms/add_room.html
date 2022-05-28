@@ -106,7 +106,7 @@
       <section class="admin-form">
         <div class="container">
           <h2>Add Room</h2>
-          <form th:action="@{/admin/addRoom}" th:object="${room}" method="post">
+          <form th:action="@{/admin/addRoom}" th:object="${room}" method="post" enctype="multipart/form-data">
             <label for="hotel_name">Choose your hotel</label>
             <div th:each="hotel : ${hotels}">
               <input th:field="*{hotelHasRooms}" type="checkbox" th:value="${hotel.id}">
@@ -128,9 +128,15 @@
               <label for="room_description">Room Description</label>
               <input type="text" th:field="*{description}" class="form-control" />
             </div>
-
+            <div class="form-group">
+              <label for="room_image">Room Image</label>
+              <input type="file" name="file"/>
+            </div>
             <div>
               <button type="submit" class="form-group" style="font-family: 'Comic Sans MS'; background-color: lightgreen">Tạo mới</button>
+            </div>
+            <div style="display: inline-block; margin-left: 2px">
+              <button type="button" class="form-group" style="font-family: 'Comic Sans MS'; background-color: bisque"><a th:href="@{/admin}" style="color: black">Quay lại</a></button>
             </div>
           </form>
         </div>

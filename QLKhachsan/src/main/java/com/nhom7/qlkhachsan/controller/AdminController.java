@@ -15,6 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller
 @RequestMapping("/admin")
@@ -45,19 +53,35 @@ public class AdminController {
     @Autowired
     private RoomService roomService;
 
+    private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
     @PostMapping("/addHotel")
-    public String addHotel(Hotel hotel){
-        //System.out.println(hotel.toString());
+    public String addHotel(Hotel hotel, @RequestParam("file") MultipartFile image) throws IOException {
+        Path staticPath = Paths.get("QLKhachsan\\src\\main\\resources\\static\\media\\images\\hotel_and_room_images");
+        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath))) {
+            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath));
+        }
+        Path file = CURRENT_FOLDER.resolve(staticPath).resolve(image.getOriginalFilename());
+        try (OutputStream os = Files.newOutputStream(file)) {
+            os.write(image.getBytes());
+        }
+        hotel.setImagePath(staticPath.resolve(image.getOriginalFilename()).toString());
         hotel.setOwner(getCurrentUser());
         hotelService.addHotel(hotel);
         return "redirect:/admin";
     }
 
     @PostMapping("/addRoom")
-    public String addRoom(Room room){
-        //System.out.println(room.toString());
+    public String addRoom(Room room, @RequestParam("file") MultipartFile image) throws IOException {
+        Path staticPath = Paths.get("QLKhachsan\\src\\main\\resources\\static\\media\\images\\hotel_and_room_images");
+        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath))) {
+            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath));
+        }
+        Path file = CURRENT_FOLDER.resolve(staticPath).resolve(image.getOriginalFilename());
+        try (OutputStream os = Files.newOutputStream(file)) {
+            os.write(image.getBytes());
+        }
+        room.setImagePath(staticPath.resolve(image.getOriginalFilename()).toString());
         room.setStatus(true);
-        //room.setHotelHasRooms(hotel);
         roomService.addRoom(room);
         return "redirect:/admin";
     }
