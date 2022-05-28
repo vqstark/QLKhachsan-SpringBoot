@@ -103,7 +103,7 @@
 </header>
 
 <main id="admin-main">
-    <section class="admin-form">
+   <section class="admin-form">
         <div class="container">
             <div class="container my-5">
                 <div class="section-title">
@@ -114,41 +114,32 @@
                             style="font-family: 'Comic Sans MS'; background-color: bisque"><a th:href="@{/admin}"style="color: black">Quay lại</a>
                     </button>
                 </div>
-                <div class="row custom-room-cards">
-                    <div class="col col-md-3">
-                        <div class="card" th:each="hotel: ${hotels}">
-                            <div class="card-body">
-                                <img th:src="@{ ${'/' + hotel.imagePath} }"/>
-                            </div>
-                            <div class="card-footer">
-                                <div class="footer-head">
-                                    <span th:text="${hotel.name}"></span>
-                                    <span th:text="${hotel.address}"></span>
-                                </div>
-                                <div class="footer-body">
-                                    <a th:href="@{/admin/editHotel/{id}(id=${hotel.id})}">
-                                        <button type="button" class="btn btn-primary" name="find-rooms">
-                                            Chỉnh sửa
-                                        </button>
-                                    </a>
-                                </div>
-                                <div class="footer-body">
-                                    <a th:href="@{/admin/deleteHotel/{id}(id=${hotel.id})}">
-                                        <button type="button" class="btn btn-primary" name="find-rooms">
-                                            Xóa
-                                        </button>
-                                    </a>
-                                </div>
-                            </div>
+                <div class="card" style="width: 50em;" th:each="hotel: ${hotels}" >
+                    <img class="card-img-top" th:src="@{${'/' + hotel.imagePath}}" alt="Card image cap">
+                    <div class="card-body">
+                        <label for="name">Hotel Name: </label>
+                        <span th:text="${hotel.name}" class="card-title" id="name"></span><br>
+                        <label for="address">Address: </label>
+                        <span th:text="${hotel.address}" class="card-title" id="address"></span><br>
+                        <div class="footer-body" style="display: inline-block">
+                            <a th:href="@{/admin/editHotel/{id}(id=${hotel.id})}">
+                                <button type="button" class="btn btn-primary" name="find-rooms">
+                                    Chỉnh sửa
+                                </button>
+                            </a>
+                        </div>
+                        <div class="footer-body" style="display: inline-block">
+                            <a th:href="@{/admin/deleteHotel/{id}(id=${hotel.id})}">
+                                <button type="button" class="btn btn-primary" name="find-rooms">
+                                    Xóa
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Room element end -->
-
-        </div>
+    </section>
     </section>
 </main>
 
