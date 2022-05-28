@@ -87,59 +87,47 @@
                     </div>
                 </li>
             </ul>
-            <!--            <ul class="navbar-nav side-nav bg-dark text-light">-->
-            <!--                <li class="nav-item">-->
-            <!--                    <a class="nav-link" th:href="@{/rooms}">Hotels</a>-->
-            <!--                </li>-->
-            <!--                <li class="nav-item">-->
-            <!--                    <a class="nav-link" th:href="@{/reservation}">Reservations</a>-->
-            <!--                </li>-->
-            <!--                <li class="nav-item">-->
-            <!--                    <a class="nav-link" th:href="@{/admin/rooms}">Users</a>-->
-            <!--                </li>-->
-            <!--            </ul>-->
         </div>
     </nav>
 </header>
 
 <main id="admin-main">
-
     <section class="admin-form">
         <div class="container">
             <div class="container my-5">
                 <div class="section-title">
-                    <h2>Our Hotel</h2>
+                    <h2>Please choose a hotel</h2>
                 </div>
                 <div>
                     <button type="button" class="form-group"
-                            style="font-family: 'Comic Sans MS'; background-color: bisque"><a th:href="@{/admin}"style="color: black">Quay lại</a>
+                            style="font-family: 'Comic Sans MS'; background-color: bisque"><a th:href="@{/admin}" style="color: black">Quay lại</a>
                     </button>
                 </div>
-                <span th:text="${message}"></span>
-                <div class="card" style="width: 50em;" th:each="hotel: ${hotels}" >
-                    <img class="card-img-top" th:src="@{${'/' + hotel.imagePath}}" alt="Card image cap">
-                    <div class="card-body">
-                        <label for="name">Hotel Name: </label>
-                        <span th:text="${hotel.name}" class="card-title" id="name"></span><br>
-                        <label for="address">Address: </label>
-                        <span th:text="${hotel.address}" class="card-title" id="address"></span><br>
-                        <div class="footer-body" style="display: inline-block">
-                            <a th:href="@{/admin/editHotel/{id}(id=${hotel.id})}">
-                                <button type="button" class="btn btn-primary" name="find-rooms">
-                                    Chỉnh sửa
-                                </button>
-                            </a>
-                        </div>
-                        <div class="footer-body" style="display: inline-block">
-                            <a th:href="@{/admin/deleteHotel/{id}(id=${hotel.id})}">
-                                <button type="button" class="btn btn-primary" name="find-rooms">
-                                    Xóa
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <section class="content">
+                    <table
+                            id="dtVerticalScrollExample"
+                            class="table table-striped table-bordered small"
+                            cellspacing="0"
+                    >
+                        <thead>
+                        <tr>
+                            <th class="th-sm">Khách sạn</th>
+                            <th class="th-sm"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="hotel: ${hotels}">
+                            <td th:text="${hotel.name}"></td>
+                            <td><a th:href="@{/admin/rooms/{id}(id =${hotel.id})}">Xem chi tiết</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </section>
             </div>
+        </div>
+
+        <!-- Room element end -->
+
         </div>
     </section>
 </main>
