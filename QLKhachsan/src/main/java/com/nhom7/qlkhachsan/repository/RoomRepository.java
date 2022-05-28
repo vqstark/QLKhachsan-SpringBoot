@@ -11,4 +11,10 @@ import java.util.List;
 public interface RoomRepository extends JpaRepository<Room, Long> {
     @Query(value = "select * from room r where r.hotel_id = id", nativeQuery = true)
     List<Room> getAllRoomsByHotelID(Long id);
+    
+    Room getById(Long id);
+
+    Room save(Room room);
+
+    void deleteById(Long id);
 }
