@@ -9,4 +9,12 @@ public interface RoomService {
     Room addRoom(Room room);
 
     List<Room> getEmptyRooms(Long idHotel);
+
+    List<Room> getAllRooms(Long id);
+
+    Room findById(Long id);
+
+    void save(Room room);
+
+    void deleteById(Long id);
 }

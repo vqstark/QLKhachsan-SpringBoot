@@ -40,21 +40,6 @@ public class HomeController {
 //        return "reservation";
 //    }
 
-    @GetMapping("/my_reservation")
-    public String LoadMyReservation(Model model) {
-        List<BookingRoom> bookingRoomList = bookingRepository.findAllByUserBookId(getCurrentUser().getId());
-        List<BookingDTO> bookingRoomDTOList = new ArrayList<>();
-        for(BookingRoom b: bookingRoomList){
-            BookingDTO bookingDTO = new BookingDTO();
-            bookingDTO.setRoom_name(b.getRoomIsBooked().getRoomName());
-            bookingDTO.setTimeBegin(b.getTimeBegin());
-            bookingDTO.setTimeEnd(b.getTimeEnd());
-            bookingDTO.setPrice(b.getPrice());
-            bookingDTO.setPaid(false);
-        }
-        model.addAttribute("MyReservation", bookingRoomDTOList);
-        return "myReservation";
-    }
 
     @GetMapping("/rooms")
     public String loadPageRooms() {

@@ -103,35 +103,41 @@
 </header>
 
 <main id="admin-main">
-
     <section class="admin-form">
         <div class="container">
             <div class="container my-5">
                 <div class="section-title">
-                    <h2>Our Hotel</h2>
+                    <h2>Our Rooms</h2>
                 </div>
                 <div>
                     <button type="button" class="form-group"
-                            style="font-family: 'Comic Sans MS'; background-color: bisque"><a th:href="@{/admin}"style="color: black">Quay lại</a>
+                            style="font-family: 'Comic Sans MS'; background-color: bisque"><a th:href="@{/admin/listRooms}" style="color: black">Quay lại</a>
                     </button>
                 </div>
-                <span th:text="${message}"></span>
-                <div class="card" style="width: 50em;" th:each="hotel: ${hotels}" >
-                    <img class="card-img-top" th:src="@{${'/' + hotel.imagePath}}" alt="Card image cap">
+                <div class="card" style="width: 50em;" th:each="room: ${rooms}">
+                    <img class="card-img-top" th:src="@{${'/' + room.imagePath}}" alt="Card image cap">
                     <div class="card-body">
                         <label for="name">Hotel Name: </label>
-                        <span th:text="${hotel.name}" class="card-title" id="name"></span><br>
-                        <label for="address">Address: </label>
-                        <span th:text="${hotel.address}" class="card-title" id="address"></span><br>
+                        <span th:text="${room.roomName}" class="card-title" id="name"></span><br>
+                        <label for="type">Type: </label>
+                        <span th:text="${room.type}" class="card-title" id="type"></span><br>
+                        <label for="price">Price: </label>
+                        <span th:text="${room.price}" class="card-title" id="price"></span><br>
+                        <label for="status">Status: </label>
+                        <div th:switch="${room.status}" id="status" style="display:inline-block;">
+                            <p th:case="true" class="cart-title">Available</p>
+                            <p th:case="false" class="cart-title">Booked</p>
+                        </div><br>
+<!--                        <span th:text="${room.status}" class="card-title" id="status"></span><br>-->
                         <div class="footer-body" style="display: inline-block">
-                            <a th:href="@{/admin/editHotel/{id}(id=${hotel.id})}">
+                            <a th:href="@{/admin/editRoom/{id}(id=${room.id})}">
                                 <button type="button" class="btn btn-primary" name="find-rooms">
                                     Chỉnh sửa
                                 </button>
                             </a>
                         </div>
                         <div class="footer-body" style="display: inline-block">
-                            <a th:href="@{/admin/deleteHotel/{id}(id=${hotel.id})}">
+                            <a th:href="@{/admin/deleteRoom/{id}(id=${room.id})}">
                                 <button type="button" class="btn btn-primary" name="find-rooms">
                                     Xóa
                                 </button>
