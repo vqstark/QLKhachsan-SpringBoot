@@ -180,4 +180,12 @@ public class AdminController {
         roomService.deleteById(id);
         return "redirect:/admin/listRooms";
     }
+    
+     @GetMapping("/users")
+    public String users(Model model) {
+        model.addAttribute("bookings", bookingRoomService.getAll());
+        model.addAttribute("users", userService.getAll());
+        model.addAttribute("rooms", roomService.getAll());
+        return "/admin/rooms/users";
+    }
 }
