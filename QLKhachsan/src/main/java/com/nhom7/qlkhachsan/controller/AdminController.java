@@ -118,15 +118,66 @@ public class AdminController {
         return "redirect:/admin/hotels";
     }
 
-    @GetMapping("/deleteHotel/{id}")
-    public String deleteHotel(@PathVariable Long id, Model model) {
-        model.addAttribute("id", id);
-        return "/admin/rooms/deleteHotel";
+   @GetMapping("/deleteHotel/{id}")
+    public String deleteHotel(@PathVariable Long id, RedirectAttributes redirectAttributes, Model model) {
+        if (roomService.getAllRooms(id) == null) {
+            model.addAttribute("id", id);
+            return "/admin/rooms/deleteHotel";
+        }
+        else {
+            redirectAttributes.addFlashAttribute("message", "Không thể xóa khách sạn do tồn tại phòng");
+            return "redirect:/admin/hotels";
+        }
     }
 
     @PostMapping("/deleteHotel/{id}")
     public String deleteHotel(@PathVariable Long id) {
         hotelService.deleteById(id);
         return "redirect:/admin/hotels";
+    }
+    @GetMapping("/listRooms")
+    public String listRoom(Model model) {
+        model.addAttribute("hotels", hotelService.getHotelsByOwner(getCurrentUser()));
+        return "/admin/rooms/listHotelChoose";
+    }
+
+    @GetMapping("/rooms/{id}")
+    public String rooms(@PathVariable Long id, Model model) {
+        model.addAttribute("rooms", roomService.getAllRooms(id));
+        return "/admin/rooms/showrooms";
+    }
+
+    @GetMapping("/editRoom/{id}")
+    public String editRoom(@PathVariable Long id, Model model) {
+        model.addAttribute("room", roomService.findById(id));
+        return "/admin/rooms/editRoom";
+    }
+
+    @PostMapping("/editRoom/{id}")
+    public String editRoom(@PathVariable Long id, Room room, @RequestParam(value = "file",required = false) MultipartFile image) throws IOException {
+        Path staticPath = Paths.get("QLKhachsan\\src\\main\\resources\\static\\media\\images\\hotel_and_room_images");
+        if (!Files.exists(CURRENT_FOLDER.resolve(staticPath))) {
+            Files.createDirectories(CURRENT_FOLDER.resolve(staticPath));
+        }
+        Path file = CURRENT_FOLDER.resolve(staticPath).resolve(image.getOriginalFilename());
+        try (OutputStream os = Files.newOutputStream(file)) {
+            os.write(image.getBytes());
+        }
+        room.setHotelHasRooms(roomService.findById(id).getHotelHasRooms());
+        room.setImagePath(staticPath.resolve(image.getOriginalFilename()).toString().substring(37));
+        roomService.save(room);
+        return "redirect:/admin/listRooms";
+    }
+
+    @GetMapping("/deleteRoom/{id}")
+    public String deleteRoom(@PathVariable Long id, Model model) {
+        model.addAttribute("id", id);
+        return "/admin/rooms/deleteRoom";
+    }
+
+    @PostMapping("/deleteRoom/{id}")
+    public String deleteRoom(@PathVariable Long id) {
+        roomService.deleteById(id);
+        return "redirect:/admin/listRooms";
     }
 }
