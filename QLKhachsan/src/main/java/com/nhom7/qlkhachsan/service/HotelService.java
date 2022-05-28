@@ -25,4 +25,8 @@ public interface HotelService {
     void followHotel(User user, Long hotelID);
 
     void unfollowHotel(User user, Long hotelID);
+    
+    void deleteById(Long id);
+
+    void updateHotel(Hotel hotel);
 }
