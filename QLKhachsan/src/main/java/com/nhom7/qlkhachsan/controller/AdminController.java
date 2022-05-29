@@ -1,9 +1,11 @@
 package com.nhom7.qlkhachsan.controller;
 
+import com.nhom7.qlkhachsan.entity.hotel.BookingRoom;
 import com.nhom7.qlkhachsan.entity.hotel.Hotel;
 import com.nhom7.qlkhachsan.entity.hotel.Room;
 import com.nhom7.qlkhachsan.entity.user.User;
 import com.nhom7.qlkhachsan.repository.HotelRepository;
+import com.nhom7.qlkhachsan.service.BookingRoomService;
 import com.nhom7.qlkhachsan.service.HotelService;
 import com.nhom7.qlkhachsan.service.RoomService;
 import com.nhom7.qlkhachsan.service.UserService;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -180,7 +183,8 @@ public class AdminController {
         roomService.deleteById(id);
         return "redirect:/admin/listRooms";
     }
-    
+    @Autowired
+    private BookingRoomService bookingRoomService;
      @GetMapping("/users")
     public String users(Model model) {
         model.addAttribute("bookings", bookingRoomService.getAll());
