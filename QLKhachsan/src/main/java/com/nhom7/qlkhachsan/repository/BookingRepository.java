@@ -17,6 +17,15 @@ public interface BookingRepository extends JpaRepository<BookingRoom, Long> {
            "JOIN (SELECT b.user_id, b.price,b.time_begin, b.time_end,r.room_name FROM booking b JOIN room r ON b.room_id = r.id) as p " +
            "ON user.id = p.user_id", nativeQuery = true)
    List<UserBookingDTO> getListUserBooked();
+  
+   @Query(value = "select count(id) from booking", nativeQuery = true)
+   int countAll();
+
+   @Query(value = "select count(distinct(user_id)) from booking", nativeQuery = true)
+   int countUser();
+
+   @Query(value = "SELECT MONTH(time_begin) AS month, SUM(price) AS total FROM booking GROUP BY MONTH(time_begin)  ORDER BY MONTH(time_begin) ", nativeQuery = true)
+   List<StatDTO> getTurnoversByMonth();
 
    List<BookingRoom> getAllByUserBookId(Long useId);
 
