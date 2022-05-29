@@ -1,6 +1,7 @@
 package com.nhom7.qlkhachsan.controller;
 
 import com.nhom7.qlkhachsan.dto.BookingDTO;
+import com.nhom7.qlkhachsan.dto.SearchingDTO;
 import com.nhom7.qlkhachsan.entity.hotel.BookingRoom;
 import com.nhom7.qlkhachsan.entity.user.User;
 import com.nhom7.qlkhachsan.repository.BookingRepository;
@@ -26,14 +27,12 @@ public class HomeController {
     private UserRepository userRepository;
 
     @GetMapping
-    public String home() {
+    public String home(Model model) {
+        model.addAttribute("search", new SearchingDTO());
         return "index";
     }
 
-    @GetMapping("/login")
-    public String loadPageLogin() {
-        return "login";
-    }
+
 
 //    @GetMapping("/reservation")
 //    public String loadPageReservation() {

@@ -112,72 +112,9 @@
     <main>
       <section id="home-form">
         <div class="wrapper">
-          <form id="find-available-rooms-form">
-            <div class="form-group">
-              <label for="check-in">Check in</label>
-              <input
-                type="hidden"
-                id="check-in"
-                class="form-control"
-                name="check-in"
-              />
-              <button id="check-in-button" class="btn input-button">
-                Check in date
-              </button>
-            </div>
-            <div class="form-group">
-              <label for="check-in">Check out</label>
-              <input
-                type="hidden"
-                id="check-out"
-                class="form-control"
-                name="check-out"
-                value=""
-              />
-              <button id="check-out-button" class="btn input-button">
-                Check out date
-              </button>
-            </div>
-            <div class="form-group">
-              <label for="form-dropdown">Guests</label>
-              <button
-                class="btn dropdown-toggle"
-                id="form-dropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Add guests
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="form-dropdown">
-                <li class="dropdown-menu-item">
-                  <div class="form-group form-group-nested">
-                    <label for="count-adults">Adults</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="count-adults"
-                      placeholder="Ages 13 or above"
-                    />
-                  </div>
-                  <div class="form-group form-group-nested">
-                    <label for="count-children">Children</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="count-children"
-                      placeholder="Ages 1-12"
-                    />
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary" name="find-rooms">
-                Search
-              </button>
-            </div>
+          <form th:action="@{/hotel/search}" method="get" th:object="${search}">
+            <input type="text" placeholder="Input name of hotel..." style = "box-sizing: border-box; height: 40px; width: 300px; padding-left: 20px" th:field="*{body}">
+            <button style="box-sizing:border-box; height: 40px; width: 60px; border-radius: 5px; color: white; background-color: #1e62d8">Search</button>
           </form>
         </div>
       </section>
