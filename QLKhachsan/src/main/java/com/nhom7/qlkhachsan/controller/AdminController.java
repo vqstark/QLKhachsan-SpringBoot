@@ -32,8 +32,25 @@ public class AdminController {
     private HotelRepository hotelRepository;
     @Autowired
     private UserService userService;
+    
     @GetMapping
-    public String home() {
+    public String home(Model model) {
+
+        // count current room
+        List<Hotel> list = hotelService.getHotelsByOwner(getCurrentUser());
+        int rooms = 0;
+        for (int i = 0; i < list.size(); i++) {
+            rooms += roomService.getAllRooms(list.get(i).getId()).size();
+        }
+        model.addAttribute("rooms", rooms);
+
+        // count current user
+        int users = bookingRoomService.countUser();
+        model.addAttribute("users", users);
+
+        // count current reservation
+        int reservations = bookingRoomService.countAll();
+        model.addAttribute("reservations", reservations);
         return "/admin/index";
     }
 
@@ -43,6 +60,7 @@ public class AdminController {
         model.addAttribute("hotels", hotelRepository.findAllByOwner(getCurrentUser()));
         return "/admin/rooms/add_room";
     }
+    
     @GetMapping("addHotel")
     public String loadPageAddHotel(Model model) {
         model.addAttribute("hotel", new Hotel());
@@ -53,6 +71,8 @@ public class AdminController {
     private HotelService hotelService;
     @Autowired
     private RoomService roomService;
+    @Autowired
+    private BookingRoomService bookingRoomService;
 
     private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
     @PostMapping("/addHotel")
@@ -191,5 +211,10 @@ public class AdminController {
         model.addAttribute("users", userService.getAll());
         model.addAttribute("rooms", roomService.getAll());
         return "/admin/rooms/users";
+    }
+     @GetMapping("/statsByMonth")
+    public String stat(Model model) {
+        model.addAttribute("bookings", bookingRoomService.getTurnoversByMonth());
+        return "/admin/rooms/StatsByMonth";
     }
 }
