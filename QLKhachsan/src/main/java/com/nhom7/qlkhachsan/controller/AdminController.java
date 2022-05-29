@@ -57,7 +57,7 @@ public class AdminController {
     private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
     @PostMapping("/addHotel")
     public String addHotel(Hotel hotel, @RequestParam("file") MultipartFile image) throws IOException {
-        Path staticPath = Paths.get("QLKhachsan\\src\\main\\resources\\static\\media\\images\\hotel_and_room_images");
+        Path staticPath = Paths.get("QLKhachsan/src/main/resources/static/media/images/hotel_and_room_images");
         if (!Files.exists(CURRENT_FOLDER.resolve(staticPath))) {
             Files.createDirectories(CURRENT_FOLDER.resolve(staticPath));
         }
@@ -73,7 +73,7 @@ public class AdminController {
 
     @PostMapping("/addRoom")
     public String addRoom(Room room, @RequestParam("file") MultipartFile image) throws IOException {
-        Path staticPath = Paths.get("QLKhachsan\\src\\main\\resources\\static\\media\\images\\hotel_and_room_images");
+        Path staticPath = Paths.get("QLKhachsan/src/main/resources/static/media/images/hotel_and_room_images");
         if (!Files.exists(CURRENT_FOLDER.resolve(staticPath))) {
             Files.createDirectories(CURRENT_FOLDER.resolve(staticPath));
         }
@@ -106,7 +106,7 @@ public class AdminController {
     }
     @PostMapping("/editHotel/{id}")
     public String editHotel(@PathVariable Long id,Hotel hotel, @RequestParam("file") MultipartFile image) throws IOException {
-        Path staticPath = Paths.get("QLKhachsan\\src\\main\\resources\\static\\media\\images\\hotel_and_room_images");
+        Path staticPath = Paths.get("QLKhachsan/src/main/resources/static/media/images/hotel_and_room_images");
         if (!Files.exists(CURRENT_FOLDER.resolve(staticPath))) {
             Files.createDirectories(CURRENT_FOLDER.resolve(staticPath));
         }
@@ -158,7 +158,7 @@ public class AdminController {
 
     @PostMapping("/editRoom/{id}")
     public String editRoom(@PathVariable Long id, Room room, @RequestParam(value = "file",required = false) MultipartFile image) throws IOException {
-        Path staticPath = Paths.get("QLKhachsan\\src\\main\\resources\\static\\media\\images\\hotel_and_room_images");
+        Path staticPath = Paths.get("QLKhachsan/src/main/resources/static/media/images/hotel_and_room_images");
         if (!Files.exists(CURRENT_FOLDER.resolve(staticPath))) {
             Files.createDirectories(CURRENT_FOLDER.resolve(staticPath));
         }
