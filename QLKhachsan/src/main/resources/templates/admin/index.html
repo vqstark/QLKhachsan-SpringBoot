@@ -77,9 +77,8 @@
                             class="dropdown-menu dropdown-menu-right"
                             aria-labelledby="navbarDropdown"
                     >
-            <span class="dropdown-item"
-            >Signed in as <b>lemon potter</b></span
-            >
+<!--            <span class="dropdown-item"-->
+<!--            >Signed in as <b>lemon potter</b></span>-->
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{../index.php}">Admin</a>
                         <a class="dropdown-item" th:href="@{../index.php}">Log in</a>
@@ -94,7 +93,7 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/admin/hotels}">Hotels</a>
                 </li>
-                 <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" th:href="@{/admin/listRooms}">Rooms</a>
                 </li>
                 <li class="nav-item">
@@ -105,6 +104,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/admin/users}">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin/statsByMonth}">Stat By Month</a>
                 </li>
             </ul>
         </div>
@@ -135,7 +137,7 @@
                                 </div>
                                 <div class="info">
                                     <div class="number">
-                                        8
+                                        <span th:text="${rooms}"></span>
                                     </div>
                                     <div class="label">Rooms</div>
                                 </div>
@@ -152,7 +154,7 @@
                                 </div>
                                 <div class="info">
                                     <div class="number">
-                                        4
+                                        <span th:text="${rooms}"></span>
                                     </div>
                                     <div class="label">Users</div>
                                 </div>
@@ -169,7 +171,7 @@
                                 </div>
                                 <div class="info">
                                     <div class="number">
-                                        6
+                                        <span th:text="${reservations}"></span>
                                     </div>
                                     <div class="label">Reservations</div>
                                 </div>
@@ -181,48 +183,48 @@
             <!-- End of row COUNT -->
 
             <!-- Start of row graphs -->
-            <div class="row" id="graphs">
-                <div class="col-12 col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            Booked and unbooked rooms
-                        </div>
-                        <div class="graph">
-                            <div class="chartjs-size-monitor">
-                                <div class="chartjs-size-monitor-expand">
-                                    <div class=""></div>
-                                </div>
-                                <div class="chartjs-size-monitor-shrink">
-                                    <div class=""></div>
-                                </div>
-                            </div>
-                            <canvas id="booking-chart" style="display: block; height: 204px; width: 409px;" width="613"
-                                    height="306" class="chartjs-render-monitor"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            All room types
-                        </div>
-                        <div class="graph">
-                            <div class="chartjs-size-monitor">
-                                <div class="chartjs-size-monitor-expand">
-                                    <div class=""></div>
-                                </div>
-                                <div class="chartjs-size-monitor-shrink">
-                                    <div class=""></div>
-                                </div>
-                            </div>
-                            <canvas id="room-types" width="613" height="306"
-                                    style="background-color: rgb(255, 255, 255); display: block; height: 204px; width: 409px;"
-                                    class="chartjs-render-monitor"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--            <div class="row" id="graphs">-->
+<!--                <div class="col-12 col-md-6">-->
+<!--                    <div class="card">-->
+<!--                        <div class="card-header">-->
+<!--                            Booked and unbooked rooms-->
+<!--                        </div>-->
+<!--                        <div class="graph">-->
+<!--                            <div class="chartjs-size-monitor">-->
+<!--                                <div class="chartjs-size-monitor-expand">-->
+<!--                                    <div class=""></div>-->
+<!--                                </div>-->
+<!--                                <div class="chartjs-size-monitor-shrink">-->
+<!--                                    <div class=""></div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <canvas id="booking-chart" style="display: block; height: 204px; width: 409px;" width="613"-->
+<!--                                    height="306" class="chartjs-render-monitor"></canvas>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-12 col-md-6">-->
+<!--                    <div class="card">-->
+<!--                        <div class="card-header">-->
+<!--                            All room types-->
+<!--                        </div>-->
+<!--                        <div class="graph">-->
+<!--                            <div class="chartjs-size-monitor">-->
+<!--                                <div class="chartjs-size-monitor-expand">-->
+<!--                                    <div class=""></div>-->
+<!--                                </div>-->
+<!--                                <div class="chartjs-size-monitor-shrink">-->
+<!--                                    <div class=""></div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <canvas id="room-types" width="613" height="306"-->
+<!--                                    style="background-color: rgb(255, 255, 255); display: block; height: 204px; width: 409px;"-->
+<!--                                    class="chartjs-render-monitor"></canvas>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         </div>
     </section>
 </main>
