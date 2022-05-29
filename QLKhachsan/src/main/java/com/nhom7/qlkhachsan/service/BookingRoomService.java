@@ -6,4 +6,10 @@ import java.util.List;
 
 public interface BookingRoomService {
     List<UserBookingDTO> getAll();
+    
+    int countAll();
+
+    int countUser();
+
+    List<StatDTO> getTurnoversByMonth();
 }
