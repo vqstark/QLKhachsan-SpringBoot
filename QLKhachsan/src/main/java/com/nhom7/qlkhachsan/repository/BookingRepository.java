@@ -18,4 +18,6 @@ public interface BookingRepository extends JpaRepository<BookingRoom, Long> {
            "ON user.id = p.user_id", nativeQuery = true)
    List<UserBookingDTO> getListUserBooked();
 
+   List<BookingRoom> getAllByUserBookId(Long useId);
+
 }

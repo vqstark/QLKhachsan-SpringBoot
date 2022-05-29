@@ -47,9 +47,9 @@ public class AuthController {
         return "signup";
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public String login(){
-        return "redirect:/";
+        return "login";
     }
 
     @GetMapping("/subcribe")

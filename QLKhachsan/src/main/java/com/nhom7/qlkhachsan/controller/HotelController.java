@@ -99,7 +99,7 @@ public class HotelController {
         bookingRoom.setPaid(false);
         bookingRoom.setPrice(room.getPrice()*5);
         bookingRepository.save(bookingRoom);
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("/follow/{id}")

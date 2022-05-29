@@ -6,6 +6,7 @@ import com.nhom7.qlkhachsan.entity.hotel.BookingRoom;
 import com.nhom7.qlkhachsan.entity.user.User;
 import com.nhom7.qlkhachsan.repository.BookingRepository;
 import com.nhom7.qlkhachsan.repository.UserRepository;
+import com.nhom7.qlkhachsan.service.BookingRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,12 +33,11 @@ public class HomeController {
         return "index";
     }
 
-
-
-//    @GetMapping("/reservation")
-//    public String loadPageReservation() {
-//        return "reservation";
-//    }
+    @GetMapping("/my_reservation")
+    public String users(Model model) {
+        model.addAttribute("bookings", bookingRepository.getAllByUserBookId(getCurrentUser().getId()));
+        return "myReservation";
+    }
 
 
     @GetMapping("/rooms")
