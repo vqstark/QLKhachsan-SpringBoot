@@ -19,5 +19,18 @@ public class BookingRoomServiceImpl implements BookingRoomService {
         return bookingRepository.getListUserBooked();
     }
 
+    @Override
+    public int countAll() {
+        return bookingRoomRepository.countAll();
+    }
 
+    @Override
+    public int countUser() {
+        return bookingRoomRepository.countUser();
+    }
+
+    @Override
+    public List<StatDTO> getTurnoversByMonth() {
+        return bookingRoomRepository.getTurnoversByMonth();
+    }
 }
