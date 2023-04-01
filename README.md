@@ -4,6 +4,8 @@ Hệ thống quản giúp người quản lí thực hiện các nghiệp vụ n
 
 II.Chức năng của hệ thống web
 1. Đăng nhập, đăng kí cho người dùng
+    - Tài khoản admin/manager: (username/password: admin/admin)
+    - Tài khoản user: (username/password: quan/quan)
 2. Bảo mật bằng Spring security
 3. Chức năng thêm khách sạn, thêm phòng
 4. Chức năng đặt phòng
